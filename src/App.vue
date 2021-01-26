@@ -1,7 +1,6 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="p-14">
+    <router-link class="flex justify-center text-6xl" to="/">Vue-Dex</router-link>
   </div>
   <router-view />
 </template>
