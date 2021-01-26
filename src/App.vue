@@ -1,6 +1,8 @@
 <template>
   <div class="p-14">
-    <router-link class="flex justify-center text-6xl" to="/">Vue-Dex</router-link>
+    <router-link class="flex justify-center text-6xl" to="/">
+      Vue-Dex
+    </router-link>
   </div>
   <router-view />
 </template>
