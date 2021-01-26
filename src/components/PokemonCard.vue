@@ -7,7 +7,7 @@
       <h5
         class="text-sm text-gray-500 font-bold tracking-widest mb-2 uppercase"
       >
-        {{ pokemon }}
+        {{ pokeData.name }}
       </h5>
       <a
         href="#"
@@ -20,20 +20,26 @@
 </template>
 
 <script>
+//import PokemonDetail from ".\PokemonDetail.vue";
+import { ref } from "vue";
+
 export default {
   name: "Pokemon Card",
   props: {
     pokemon: String
   },
   setup(props) {
-    //TODO: Seperate Data by Pokemon Info
+    let pokeData = ref([]);
+    //TODO: Seperate Data by Pokemon Info, make it usuable by others component, further destructing required to make the data usuable
+    //TODO: and to pass it to other components.
     fetch("https://pokeapi.co/api/v2/pokemon/" + props.pokemon)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        pokeData = data;
+        console.log(pokeData);
       });
 
-    return {};
+    return { pokeData };
   }
 };
 </script>
