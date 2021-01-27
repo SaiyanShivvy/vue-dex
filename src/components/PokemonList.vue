@@ -1,15 +1,3 @@
-<!-- 
-    Parent Component 
-
-This sends data to the card component then to detail component
-
-    List -> Card
-        Card -> Detail 
-
-    Trying to reduce fetches 
-
- -->
-
 <template>
   <div class="mt-10 p-4 flex flex-wrap justify-center">
     <div
@@ -41,13 +29,13 @@ export default {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         state.pokemonList = data.results;
         state.pokemonIDs = data.results.reduce(
           (acc, cur, idx) => (acc = { ...acc, [cur.name]: idx + 1 }),
           {}
         );
-        console.log(state.pokemonIDs);
+        //console.log(state.pokemonIDs);
       });
 
     return { ...toRefs(state) };

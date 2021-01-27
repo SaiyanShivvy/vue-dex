@@ -1,7 +1,7 @@
 <template>
   <div class="p-14">
     <router-link class="flex justify-center text-6xl" to="/">
-      Vue-Dex
+      VueJS PokeDex
     </router-link>
   </div>
   <router-view />
