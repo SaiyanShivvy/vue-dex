@@ -1,13 +1,23 @@
 <template>
   <div class="container mx-4 my-4 flex">
     <div class="w-48 border">
+      <!-- Spires from PokemonDB-->
       <img
-        v-bind:src="pokeInfo.pokeData.sprites.front_default"
+        :src="
+          'https://img.pokemondb.net/sprites/home/normal/' +
+            pokeInfo.pokeData.name +
+            '.png'
+        "
+        alt="pokeInfo.pokeData.name"
         class="w-full"
-        alt="..."
       />
     </div>
     <div class="p-4">
+      <h5
+        class="text-sm text-gray-500 font-bold tracking-widest mb-2 uppercase"
+      >
+        ID: {{ pokeInfo.pokeData.id }}
+      </h5>
       <h5
         class="text-sm text-gray-500 font-bold tracking-widest mb-2 uppercase"
       >
@@ -17,18 +27,21 @@
         href="#"
         class="bg-green-500 hover:bg-green-400 text-white px-4 py-2 inline-block mt-4 rounded"
       >
-        More Details
+        <PokemonDetail></PokemonDetail>
       </a>
     </div>
   </div>
 </template>
 
 <script>
-//import PokemonDetail from ".\PokemonDetail.vue";
+import PokemonDetail from "./PokemonDetail.vue";
 import { reactive } from "vue";
 
 export default {
   name: "Pokemon Card",
+  components: {
+    PokemonDetail
+  },
   props: {
     pokemon: String
   },
@@ -40,7 +53,7 @@ export default {
       .then(res => res.json())
       .then(data => {
         pokeInfo.pokeData = data;
-        //console.log(pokeInfo.pokeData.sprites.front_default);
+        //console.log(pokeInfo.pokeData);
       });
 
     return { pokeInfo };

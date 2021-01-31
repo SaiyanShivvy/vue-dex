@@ -1,7 +1,7 @@
 <template>
   <div class="mt-10 p-4 flex flex-wrap justify-center">
     <div
-      class="ml-4 text-2x text-blue-600"
+      class="grid grid-rows-1 grid-flow-col"
       v-for="(pokemon, idx) in pokemonList"
       :key="idx"
     >
@@ -14,7 +14,8 @@
 import { reactive, toRefs } from "vue";
 import PokemonCard from "./PokemonCard.vue";
 
-// Unable to use refs here, as it doesn't count as a function
+//TODO: Implement a Search function that overrides the fetch url by using a base url + input to fetch that url
+
 export default {
   name: "Pokemon List",
   components: {
@@ -29,13 +30,11 @@ export default {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then(res => res.json())
       .then(data => {
-        //console.log(data);
         state.pokemonList = data.results;
         state.pokemonIDs = data.results.reduce(
           (acc, cur, idx) => (acc = { ...acc, [cur.name]: idx + 1 }),
           {}
         );
-        //console.log(state.pokemonIDs);
       });
 
     return { ...toRefs(state) };
