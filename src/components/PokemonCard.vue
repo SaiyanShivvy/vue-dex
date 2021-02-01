@@ -23,19 +23,19 @@
       >
         {{ pokeInfo.pokeData.name }}
       </h5>
-      <a
-        href="#"
-        class="bg-green-500 hover:bg-green-400 text-white px-4 py-2 inline-block mt-4 rounded"
-      >
-        <PokemonDetail></PokemonDetail>
-      </a>
+      <button @click="toggleModal">Details</button>
+      <PokemonDetail
+        v-if="modalOpen"
+        @close="modalOpen = false"
+        :pokemon="pokeInfo.pokeData.id"
+      ></PokemonDetail>
     </div>
   </div>
 </template>
 
 <script>
 import PokemonDetail from "./PokemonDetail.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 export default {
   name: "Pokemon Card",
@@ -49,6 +49,10 @@ export default {
     const pokeInfo = reactive({
       pokeData: []
     });
+    let modalOpen = ref(false);
+    const toggleModal = () => {
+      modalOpen.value = !modalOpen.value;
+    };
     fetch("https://pokeapi.co/api/v2/pokemon/" + props.pokemon)
       .then(res => res.json())
       .then(data => {
@@ -56,7 +60,7 @@ export default {
         //console.log(pokeInfo.pokeData);
       });
 
-    return { pokeInfo };
+    return { pokeInfo, modalOpen, toggleModal };
   }
 };
 </script>

@@ -27,14 +27,12 @@ export default {
       pokemonIDs: []
     });
 
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+    //fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+    fetch("https://pokeapi.co/api/v2/pokemon/?limit=20")
       .then(res => res.json())
       .then(data => {
         state.pokemonList = data.results;
-        state.pokemonIDs = data.results.reduce(
-          (acc, cur, idx) => (acc = { ...acc, [cur.name]: idx + 1 }),
-          {}
-        );
+        state.pokemonIDs = data.results.id;
       });
 
     return { ...toRefs(state) };
