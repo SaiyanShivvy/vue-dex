@@ -11,8 +11,32 @@
           </div>
           <hr />
           <div class="">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p>National Dex: {{ pokeInfo.nationalDex }}</p>
+            <p>
+              Abiilities:
+              {{ pokeInfo.ability[0] }}
+              Hidden: {{ pokeInfo.hiddenAbility[0] }}
+            </p>
+            <!-- Update any array expression to loop through the array and they display the data -->
+            <p>Types: {{ pokeInfo.types }} </p> 
+            <p>
+              Weight: {{ pokeInfo.weight }}
+              Height: {{ pokeInfo.height }}
+            </p>
+            <p>
+              Stats:
+              HP: {{ pokeInfo.hp }}
+              Attack: {{ pokeInfo.attack }}
+              Defense: {{ pokeInfo.defense }}
+              Special Attack: {{ pokeInfo.specialAttack }}
+              Special Defense: {{ pokeInfo.specialDefense }}
+              Speed: {{ pokeInfo.speed }}
+            </p>
+            <p>
+              Effort Value: {{ pokeInfo.effortValue }} {{ pokeInfo.effortStat }}
+            </p>
+            <p> Base Exp.  {{ pokeInfo.baseExp }}</p>
+            <p> Moves List: {{ pokeInfo.moves }} </p>
           </div>
           <hr />
           <div class="ml-auto">
