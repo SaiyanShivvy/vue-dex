@@ -73,16 +73,11 @@ export default {
   setup(props) {
     const pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + props.pokemon;
 
-    const speciesUrl =
-      "https://pokeapi.co/api/v2/pokemon-species/" + props.pokemon;
-
-    const encounterLocationsUrl =
+    //const encounterLocationsUrl =
       "https://pokeapi.co/api/v2/pokemon/" + props.pokemon + "/encounters";
 
-    const evolutionChainUrl =
-      "https://pokeapi.co/api/v2/evolution-chain/" + props.pokemon;
-
-    console.log(speciesUrl, encounterLocationsUrl, evolutionChainUrl);
+    var speciesUrl = null;
+    var evolutionChainUrl = null;
 
     // Main Details
     var pokeInfo = reactive({
@@ -106,7 +101,28 @@ export default {
 
     //Species, Flavor Text and Evolution Details
 
-    //Encounter Locations
+    var pokeSpecies = reactive({
+      baseHappiness: Number,
+      captureRate: Number,
+      eggGroups: [],
+      flavorText: [], //Unsure if I use 1 or all of the enteries
+      growthRate: String,
+      hatchCounter: Number,
+      isBaby: Boolean,
+      isLegendary: Boolean,
+      isMythical: Boolean
+    });
+
+    var pokeEvolution = reactive({
+      evolutionNames: [],
+      evolutionLevels: [],
+      evolutionDetails: String,
+      evolutionTrigger: String,
+      evolutionItem: String,
+      evolutionTrade: Boolean
+    });
+
+    //Encounter Locations? Unsure if this is needed
 
     //Check Mount
     onMounted(() => {
@@ -173,11 +189,44 @@ export default {
           //Get Base Exp
           pokeInfo.baseExp = data.base_experience;
 
-          console.log(pokeInfo);
+          //Function calls
+          speciesUrl = data.species.url;
+          getPokemonSpecies(speciesUrl);
         });
     }
 
-    return { getPokemonData, pokeInfo };
+    function getPokemonSpecies(url) {
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          evolutionChainUrl = data.evolution_chain.url;
+          getEvolutionChain(evolutionChainUrl);
+        });
+    }
+
+    function getEvolutionChain(url) {
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          traverseNestedObject(data);
+          console.log('-------------------');
+        });
+    }
+
+    function traverseNestedObject(obj) {
+      var testData = [];
+      for (const [key, value] of Object.entries(obj)) {
+        console.log(key);
+        if (typeof obj[key] == Object) {
+          traverseNestedObject(obj[key]);
+        } else {
+          testData.push(`${key}: ${value}`);
+        }
+        console.log(testData);
+      }
+    }
+
+    return { pokeInfo, pokeSpecies, pokeEvolution };
   }
 };
 </script>
