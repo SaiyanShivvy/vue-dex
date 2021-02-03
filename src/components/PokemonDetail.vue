@@ -214,18 +214,18 @@ export default {
     }
 
     function traverseNestedObject(obj) {
-      var testData = [];
-      for (const [key, value] of Object.entries(obj)) {
-        console.log(key);
-        if (typeof obj[key] == Object) {
-          traverseNestedObject(obj[key]);
+      //do something
+      let testData = [];
+      for (let idx in obj) {
+        if (typeof obj[idx] == "object") {
+          traverseNestedObject(obj[idx]);
+          testData.push(obj[idx]);
         } else {
-          testData.push(`${key}: ${value}`);
+          testData.push(obj[idx]);
         }
-        console.log(testData);
       }
     }
-
+    
     return { pokeInfo, pokeSpecies, pokeEvolution };
   }
 };
