@@ -32,7 +32,9 @@
               Effort Value: {{ pokeInfo.effortValue }} {{ pokeInfo.effortStat }}
             </p>
             <p>Base Exp. {{ pokeInfo.baseExp }}</p>
-            <p>Moves List: {{ pokeInfo.moves }}</p>
+            <p v-for="(move, idx) in pokeInfo.moves" :key="idx">
+              {{ idx }} - {{ move }}
+            </p>
           </div>
           <div v-if="speciesInfo != null">
             <p>{{ speciesInfo.value.eggGroups }}</p>
