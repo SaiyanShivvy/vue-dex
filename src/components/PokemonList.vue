@@ -29,7 +29,7 @@ export default {
 
     //fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
     fetch("https://pokeapi.co/api/v2/pokemon/?limit=20")
-      .then(res => res.json())
+      .then(async res => res.json())
       .then(data => {
         state.pokemonList = data.results;
         state.pokemonIDs = data.results.id;

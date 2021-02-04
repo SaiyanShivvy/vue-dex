@@ -1,7 +1,7 @@
-import { toRefs, reactive } from "vue";
+import { ref } from "vue";
 
 export function getPokemonDetails(pokemonUrl) {
-  var pokeInfo = reactive({
+  var pokeInfo = ref({
     nationalDex: Number,
     ability: [],
     hiddenAbility: [],
@@ -20,8 +20,6 @@ export function getPokemonDetails(pokemonUrl) {
     moves: [],
     speciesUrl: String
   });
-  // Currently everything is get and set here
-  // may create additional function to access and assign values
   // TODO: re assess the the structure to work normally after exporting this function
   fetch(pokemonUrl)
     .then(res => res.json())
@@ -82,7 +80,6 @@ export function getPokemonDetails(pokemonUrl) {
 
       //Function calls
       pokeInfo.value.speciesUrl = data.species.url;
-
-      return { ...toRefs(pokeInfo) };
     });
+  return pokeInfo.value;
 }

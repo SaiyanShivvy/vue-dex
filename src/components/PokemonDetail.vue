@@ -11,13 +11,13 @@
           </div>
           <hr />
           <div class="">
-            <p>National Dex: {{ pokeInfo.value.nationalDex }}</p>
+            <p>National Dex: {{ pokeInfo.nationalDex }}</p>
             <p>
               Abiilities:
               {{ pokeInfo.ability[0] }}
               Hidden: {{ pokeInfo.hiddenAbility[0] }}
             </p>
-            <!-- Update any array expression to loop through the array and they display the data -->
+
             <p>Types: {{ pokeInfo.types }}</p>
             <p>Weight: {{ pokeInfo.weight }} Height: {{ pokeInfo.height }}</p>
             <p>
@@ -69,8 +69,7 @@ export default {
     const pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + props.pokemon;
     //const encounterLocationsUrl =
     "https://pokeapi.co/api/v2/pokemon/" + props.pokemon + "/encounters";
-
-    let pokeInfo = ref([]);
+    var pokeInfo = ref();
     pokeInfo.value = getPokemonDetails(pokemonUrl);
     console.log(pokeInfo);
 
