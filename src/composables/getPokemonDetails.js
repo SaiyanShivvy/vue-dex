@@ -24,62 +24,64 @@ export function getPokemonDetails(pokemonUrl) {
   fetch(pokemonUrl)
     .then(res => res.json())
     .then(data => {
+      //Reduce typing for .value of ref for each item, maybe be a better way to do this but quick solution for now
+      let pD = pokeInfo.value;
       //Get Abilities
       if (data.abilities.length > 0) {
         for (let i = 0; i < data.abilities.length; i++) {
           if (data.abilities[i].is_hidden) {
-            pokeInfo.value.hiddenAbility.push(data.abilities[i].ability.name);
+            pD.hiddenAbility.push(data.abilities[i].ability.name);
           } else {
-            pokeInfo.value.ability.push(data.abilities[i].ability.name);
+            pD.ability.push(data.abilities[i].ability.name);
           }
         }
       }
       //Get Moves
       if (data.moves.length > 0) {
         for (let i = 0; i < data.moves.length; i++) {
-          pokeInfo.value.moves.push(data.moves[i].move.name);
+          pD.moves.push(data.moves[i].move.name);
         }
       }
       //Get Types
       if (data.types.length > 0) {
         for (let i = 0; i < data.types.length; i++) {
-          pokeInfo.value.types.push(data.types[i].type.name);
+          pD.types.push(data.types[i].type.name);
         }
       }
       //Get Stats and EVs
       if (data.stats.length > 0) {
         for (let i = 0; i < data.stats.length; i++) {
           if (data.stats[i].effort != 0) {
-            pokeInfo.value.effortValue = data.stats[i].effort;
-            pokeInfo.value.effortStat = data.stats[i].stat.name;
+            pD.effortValue = data.stats[i].effort;
+            pD.effortStat = data.stats[i].stat.name;
           }
           if (data.stats[i].stat.name == "hp") {
-            pokeInfo.value.hp = data.stats[i].base_stat;
+            pD.hp = data.stats[i].base_stat;
           } else if (data.stats[i].stat.name == "attack") {
-            pokeInfo.value.attack = data.stats[i].base_stat;
+            pD.attack = data.stats[i].base_stat;
           } else if (data.stats[i].stat.name == "defense") {
-            pokeInfo.value.defense = data.stats[i].base_stat;
+            pD.defense = data.stats[i].base_stat;
           } else if (data.stats[i].stat.name == "special-attack") {
-            pokeInfo.value.specialAttack = data.stats[i].base_stat;
+            pD.specialAttack = data.stats[i].base_stat;
           } else if (data.stats[i].stat.name == "special-defense") {
-            pokeInfo.value.specialDefense = data.stats[i].base_stat;
+            pD.specialDefense = data.stats[i].base_stat;
           } else if (data.stats[i].stat.name == "speed") {
-            pokeInfo.value.speed = data.stats[i].base_stat;
+            pD.speed = data.stats[i].base_stat;
           }
         }
       }
       // Get Height and weight
-      pokeInfo.value.height = data.height;
-      pokeInfo.value.weight = data.weight;
+      pD.height = data.height;
+      pD.weight = data.weight;
 
       //Get National Dex
-      pokeInfo.value.nationalDex = data.id.toFixed();
+      pD.nationalDex = data.id.toFixed();
 
       //Get Base Exp
-      pokeInfo.value.baseExp = data.base_experience;
+      pD.baseExp = data.base_experience;
 
       //Function calls
-      pokeInfo.value.speciesUrl = data.species.url;
+      pD.speciesUrl = data.species.url;
     });
   return pokeInfo.value;
 }

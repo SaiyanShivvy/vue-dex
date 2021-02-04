@@ -1,11 +1,14 @@
 <template>
-  <div class="container mx-4 my-4 flex">
-    <div class="w-48 border">
+  <div
+    class="max-w-md max-h-md grid-cols-3 gap-4 my-4 mx-4
+   bg-white rounded-lg shadow-lg hover:shadow-2xl"
+  >
+    <div class="justify-center">
       <!-- Spires from PokemonDB-->
       <img
         :src="
-          'https://img.pokemondb.net/sprites/home/normal/' +
-            pokeInfo.pokeData.name +
+          'https://pokeres.bastionbot.org/images/pokemon/' +
+            pokeInfo.pokeData.id +
             '.png'
         "
         alt="pokeInfo.pokeData.name"
@@ -54,7 +57,7 @@ export default {
       modalOpen.value = !modalOpen.value;
     };
     fetch("https://pokeapi.co/api/v2/pokemon/" + props.pokemon)
-      .then(async res => res.json())
+      .then(res => res.json())
       .then(data => {
         pokeInfo.pokeData = data;
       });

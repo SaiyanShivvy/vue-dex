@@ -1,6 +1,7 @@
 <template>
   <transition name="fade">
     <div
+      @onload="getSpecies(pokeInfo.speciesUrl)"
       class="flex items-center justify-center fixed left-0 bottom-0 w-full
       h-full bg-gray-800"
     >
@@ -33,6 +34,7 @@
             </p>
             <p>Base Exp. {{ pokeInfo.baseExp }}</p>
             <p>Moves List: {{ pokeInfo.moves }}</p>
+            <p>URL: {{ pokeInfo.speciesUrl }}</p>
           </div>
           <hr />
           <div class="ml-auto">
@@ -50,8 +52,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { getPokemonDetails } from "../composables/getPokemonDetails.js";
+import { ref, onBeforeMount, onMounted } from "vue";
+import { getPokemonDetails } from "../composables/getPokemonDetails";
+//import { getPokemonSpeciesDetails } from "../composables/getPokemonSpecies";
+//import { getPokemonEvolutionChain } from "../composables/getPokemonEvolutionChain";
 
 export default {
   name: "Pokemon Card",
@@ -67,24 +71,18 @@ export default {
   },
   setup(props) {
     const pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + props.pokemon;
-    //const encounterLocationsUrl =
-    "https://pokeapi.co/api/v2/pokemon/" + props.pokemon + "/encounters";
     var pokeInfo = ref();
-    pokeInfo.value = getPokemonDetails(pokemonUrl);
-    console.log(pokeInfo);
+    var speciesInfo = ref();
+    var evolutionInfo = ref();
 
-    // function traverseNestedObject(obj) {
-    //   let testData = [];
-    //   for (let idx in obj) {
-    //     if (typeof obj[idx] == "object") {
-    //       traverseNestedObject(obj[idx]);
-    //       testData.push(obj[idx]);
-    //     } else {
-    //       testData.push(obj[idx]);
-    //     }
-    //   }
-    // }
-    return { pokeInfo };
+    pokeInfo.value = getPokemonDetails(pokemonUrl);
+    onBeforeMount(() => {});
+    onMounted(() => {});
+
+    async function getSpecies(url) {
+      console.log(url);
+    }
+    return { pokeInfo, speciesInfo, evolutionInfo, getSpecies };
   }
 };
 </script>
