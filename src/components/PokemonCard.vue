@@ -54,10 +54,9 @@ export default {
       modalOpen.value = !modalOpen.value;
     };
     fetch("https://pokeapi.co/api/v2/pokemon/" + props.pokemon)
-      .then(res => res.json())
+      .then(async res => res.json())
       .then(data => {
         pokeInfo.pokeData = data;
-        //console.log(pokeInfo.pokeData);
       });
 
     return { pokeInfo, modalOpen, toggleModal };
