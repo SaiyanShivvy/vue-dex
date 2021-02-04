@@ -11,7 +11,7 @@ var pokeEvolution = ref({
 
 export function getPokemonEvolutionChain(url) {
   fetch(url)
-    .then(async res => await res.json())
+    .then(res => res.json())
     .then(data => {
       //quick hand
       let pE = pokeEvolution.value;

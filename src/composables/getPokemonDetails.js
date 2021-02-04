@@ -1,26 +1,26 @@
 import { ref } from "vue";
 
+var pokeInfo = ref({
+  nationalDex: Number,
+  ability: [],
+  hiddenAbility: [],
+  types: [],
+  height: Number,
+  weight: Number,
+  hp: Number,
+  attack: Number,
+  defense: Number,
+  specialAttack: Number,
+  specialDefense: Number,
+  speed: Number,
+  effortValue: Number,
+  effortStat: String,
+  baseExp: Number,
+  moves: [],
+  speciesUrl: String
+});
+
 export function getPokemonDetails(pokemonUrl) {
-  var pokeInfo = ref({
-    nationalDex: Number,
-    ability: [],
-    hiddenAbility: [],
-    types: [],
-    height: Number,
-    weight: Number,
-    hp: Number,
-    attack: Number,
-    defense: Number,
-    specialAttack: Number,
-    specialDefense: Number,
-    speed: Number,
-    effortValue: Number,
-    effortStat: String,
-    baseExp: Number,
-    moves: [],
-    speciesUrl: String
-  });
-  // TODO: re assess the the structure to work normally after exporting this function
   fetch(pokemonUrl)
     .then(res => res.json())
     .then(data => {

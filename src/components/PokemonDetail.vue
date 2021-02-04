@@ -1,7 +1,6 @@
 <template>
   <transition name="fade">
     <div
-      @onload="getSpecies(pokeInfo.speciesUrl)"
       class="flex items-center justify-center fixed left-0 bottom-0 w-full
       h-full bg-gray-800"
     >
@@ -34,7 +33,9 @@
             </p>
             <p>Base Exp. {{ pokeInfo.baseExp }}</p>
             <p>Moves List: {{ pokeInfo.moves }}</p>
-            <p>URL: {{ pokeInfo.speciesUrl }}</p>
+          </div>
+          <div v-if="speciesInfo != null">
+            <p>{{ speciesInfo.value.eggGroups }}</p>
           </div>
           <hr />
           <div class="ml-auto">
@@ -52,9 +53,9 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted } from "vue";
+import { ref, onBeforeMount, onMounted, computed } from "vue";
 import { getPokemonDetails } from "../composables/getPokemonDetails";
-//import { getPokemonSpeciesDetails } from "../composables/getPokemonSpecies";
+import { getPokemonSpeciesDetails } from "../composables/getPokemonSpecies";
 //import { getPokemonEvolutionChain } from "../composables/getPokemonEvolutionChain";
 
 export default {
@@ -75,14 +76,16 @@ export default {
     var speciesInfo = ref();
     var evolutionInfo = ref();
 
-    pokeInfo.value = getPokemonDetails(pokemonUrl);
-    onBeforeMount(() => {});
+    onBeforeMount(() => {
+      pokeInfo.value = getPokemonDetails(pokemonUrl);
+      speciesInfo.value = computed(() =>
+        getPokemonSpeciesDetails(pokeInfo.value.speciesUrl)
+      );
+      console.log(speciesInfo);
+    });
     onMounted(() => {});
 
-    async function getSpecies(url) {
-      console.log(url);
-    }
-    return { pokeInfo, speciesInfo, evolutionInfo, getSpecies };
+    return { pokeInfo, speciesInfo, evolutionInfo };
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-md max-h-md grid-cols-3 gap-4 my-4 mx-4
+    class="max-w-md grid-cols-3 gap-4 my-4 mx-4
    bg-white rounded-lg shadow-lg hover:shadow-2xl"
   >
     <div class="justify-center">

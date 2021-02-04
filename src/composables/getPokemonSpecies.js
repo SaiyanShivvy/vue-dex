@@ -15,7 +15,7 @@ var speciesData = ref({
 
 export function getPokemonSpeciesDetails(url) {
   fetch(url)
-    .then(async res => await res.json())
+    .then(res => res.json())
     .then(data => {
       //Quickly .value for the ref
       let sD = speciesData.value;
