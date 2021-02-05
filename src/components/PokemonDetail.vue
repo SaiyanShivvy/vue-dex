@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      class="flex items-center justify-center fixed left-0 bottom-0 w-full
+      class="overflow-y-auto overscroll-auto flex items-center justify-center fixed left-0 bottom-0 w-full
       h-full bg-gray-800"
     >
       <div class="bg-white rounded-lg w-1/2">
@@ -32,9 +32,12 @@
               Effort Value: {{ pokeInfo.effortValue }} {{ pokeInfo.effortStat }}
             </p>
             <p>Base Exp. {{ pokeInfo.baseExp }}</p>
-            <p v-for="(move, idx) in pokeInfo.moves" :key="idx">
-              {{ idx }} - {{ move }}
-            </p>
+            <p>{{ pokeInfo.moves }}</p>
+            <!-- <ul>
+              <li v-for="(move, idx) in pokeInfo.moves" :key="idx">
+                {{ idx }} - {{ move }}
+              </li>
+            </ul> -->
           </div>
           <div v-if="speciesInfo != null">
             <p>{{ speciesInfo.value.eggGroups }}</p>
@@ -55,10 +58,10 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted, computed } from "vue";
-import { getPokemonDetails } from "../composables/getPokemonDetails";
-import { getPokemonSpeciesDetails } from "../composables/getPokemonSpecies";
-//import { getPokemonEvolutionChain } from "../composables/getPokemonEvolutionChain";
+import { ref, onBeforeMount, onMounted, onBeforeUnmount, computed } from "vue";
+import { getPokemonDetails } from "@/functions/getPokemonDetails";
+//import { getPokemonSpeciesDetails } from "@/functions/getPokemonSpecies";
+//import { getPokemonEvolutionChain } from "@functions/getPokemonEvolutionChain";
 
 export default {
   name: "Pokemon Card",
@@ -74,18 +77,16 @@ export default {
   },
   setup(props) {
     const pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + props.pokemon;
-    var pokeInfo = ref();
-    var speciesInfo = ref();
-    var evolutionInfo = ref();
+    let pokeInfo = ref();
+    let speciesInfo = ref();
+    let evolutionInfo = ref();
+    pokeInfo = getPokemonDetails(pokemonUrl);
 
-    onBeforeMount(() => {
-      pokeInfo.value = getPokemonDetails(pokemonUrl);
-      speciesInfo.value = computed(() =>
-        getPokemonSpeciesDetails(pokeInfo.value.speciesUrl)
-      );
-      console.log(speciesInfo);
-    });
+    onBeforeMount(() => {});
     onMounted(() => {});
+    onBeforeUnmount(() => {
+      pokeInfo.value = computed(() => ref());
+    });
 
     return { pokeInfo, speciesInfo, evolutionInfo };
   }

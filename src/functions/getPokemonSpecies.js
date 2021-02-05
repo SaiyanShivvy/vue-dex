@@ -1,19 +1,19 @@
 import { ref } from "vue";
 
-var speciesData = ref({
-  baseHappiness: Number,
-  captureRate: Number,
-  eggGroups: [],
-  flavorText: [], //Unsure if I use 1 or all of the entries
-  growthRate: String,
-  hatchCounter: Number,
-  isBaby: Boolean,
-  isLegendary: Boolean,
-  isMythical: Boolean,
-  evoChainUrl: String
-});
-
 export function getPokemonSpeciesDetails(url) {
+  var speciesData = ref({
+    baseHappiness: Number,
+    captureRate: Number,
+    eggGroups: [],
+    flavorText: [], //Unsure if I use 1 or all of the entries
+    growthRate: String,
+    hatchCounter: Number,
+    isBaby: Boolean,
+    isLegendary: Boolean,
+    isMythical: Boolean,
+    evoChainUrl: String
+  });
+
   fetch(url)
     .then(res => res.json())
     .then(data => {

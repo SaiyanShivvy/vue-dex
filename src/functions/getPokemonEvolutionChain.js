@@ -1,15 +1,15 @@
 import { ref } from "vue";
 
-var pokeEvolution = ref({
-  evolutionNames: [],
-  evolutionLevels: [],
-  evolutionDetails: String,
-  evolutionTrigger: String,
-  evolutionItem: String,
-  evolutionTrade: Boolean
-});
-
 export function getPokemonEvolutionChain(url) {
+  var pokeEvolution = ref({
+    evolutionNames: [],
+    evolutionLevels: [],
+    evolutionDetails: String,
+    evolutionTrigger: String,
+    evolutionItem: String,
+    evolutionTrade: Boolean
+  });
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
