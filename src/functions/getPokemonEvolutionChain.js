@@ -10,12 +10,13 @@ export function getPokemonEvolutionChain(url) {
     evolutionTrade: Boolean
   });
 
+  console.log(url);
   fetch(url)
     .then(res => res.json())
     .then(data => {
       //quick hand
       let pE = pokeEvolution.value;
-      console.log(pE, data);
+      //get next evolutions
       if (data.chain.evolves_to.length >= 0) {
         for (let i = 0; i < data.chain.evolves_to.length; i++) {
           if (data.chain.evolves_to[i].evolves_to != null) {

@@ -32,15 +32,18 @@
               Effort Value: {{ pokeInfo.effortValue }} {{ pokeInfo.effortStat }}
             </p>
             <p>Base Exp. {{ pokeInfo.baseExp }}</p>
-            <p>{{ pokeInfo.moves }}</p>
-            <!-- <ul>
-              <li v-for="(move, idx) in pokeInfo.moves" :key="idx">
+            <ul class="overflow-auto-y">
+              <!-- <li v-for="(move, idx) in pokeInfo.moves" :key="idx">
                 {{ idx }} - {{ move }}
-              </li>
-            </ul> -->
+              </li> -->
+              <span> {{ pokeInfo.moves }}</span>
+            </ul>
           </div>
           <div v-if="speciesInfo != null">
-            <p>{{ speciesInfo.value.eggGroups }}</p>
+            <p>{{ speciesInfo.eggGroups }}</p>
+          </div>
+          <div v-if="evolutionInfo != null">
+            <p>{{ evolutionInfo.value.evolutionNames }}</p>
           </div>
           <hr />
           <div class="ml-auto">
@@ -58,10 +61,10 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted, onBeforeUnmount, computed } from "vue";
+import { ref, onBeforeMount, onMounted, computed } from "vue";
 import { getPokemonDetails } from "@/functions/getPokemonDetails";
-//import { getPokemonSpeciesDetails } from "@/functions/getPokemonSpecies";
-//import { getPokemonEvolutionChain } from "@functions/getPokemonEvolutionChain";
+import { getPokemonSpeciesDetails } from "@/functions/getPokemonSpecies";
+import { getPokemonEvolutionChain } from "@/functions/getPokemonEvolutionChain";
 
 export default {
   name: "Pokemon Card",
@@ -80,13 +83,17 @@ export default {
     let pokeInfo = ref();
     let speciesInfo = ref();
     let evolutionInfo = ref();
-    pokeInfo = getPokemonDetails(pokemonUrl);
+    pokeInfo.value = getPokemonDetails(pokemonUrl);
 
-    onBeforeMount(() => {});
-    onMounted(() => {});
-    onBeforeUnmount(() => {
-      pokeInfo.value = computed(() => ref());
+    onBeforeMount(() => {
+      speciesInfo.value = computed(() =>
+        getPokemonSpeciesDetails(pokeInfo.value.speciesUrl)
+      );
+      evolutionInfo.value = computed(() =>
+        getPokemonEvolutionChain(speciesInfo.value.value.evoChainUrl)
+      );
     });
+    onMounted(() => {});
 
     return { pokeInfo, speciesInfo, evolutionInfo };
   }
