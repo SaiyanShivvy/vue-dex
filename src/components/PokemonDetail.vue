@@ -32,19 +32,25 @@
               Effort Value: {{ pokeInfo.effortValue }} {{ pokeInfo.effortStat }}
             </p>
             <p>Base Exp. {{ pokeInfo.baseExp }}</p>
-            <ul class="overflow-auto-y">
-              <!-- <li v-for="(move, idx) in pokeInfo.moves" :key="idx">
-                {{ idx }} - {{ move }}
-              </li> -->
-              <span> {{ pokeInfo.moves }}</span>
-            </ul>
+            <slot name="content">
+              <div class="types">
+                <ul>
+                  <li v-for="move in pokeInfo.moves" :key="move.slot">
+                    {{ move }}
+                  </li>
+                </ul>
+              </div>
+            </slot>
           </div>
           <div v-if="speciesInfo != null">
             <p>{{ speciesInfo.eggGroups }}</p>
           </div>
-          <div v-if="evolutionInfo != null">
-            <p>{{ evolutionInfo.value.evolutionNames }}</p>
+          <div v-else>
+            <p>Fetching Remaining Information...</p>
           </div>
+          <!-- <div v-if="evolutionInfo != null">
+            <p>{{ evolutionInfo.value.evolutionNames }}</p>
+          </div> -->
           <hr />
           <div class="ml-auto">
             <button
@@ -61,7 +67,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted, computed } from "vue";
+import { computed, reactive } from "vue";
 import { getPokemonDetails } from "@/composable/getPokemonDetails";
 import { getPokemonSpeciesDetails } from "@/composable/getPokemonSpecies";
 import { getPokemonEvolutionChain } from "@/composable/getPokemonEvolutionChain";
@@ -80,19 +86,16 @@ export default {
   },
   setup(props) {
     const pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + props.pokemon;
-    let pokeInfo = ref();
-    let speciesInfo = ref();
-    let evolutionInfo = ref();
-    pokeInfo.value = getPokemonDetails(pokemonUrl);
-    speciesInfo.value = computed(async () =>
-      getPokemonSpeciesDetails(pokeInfo.value.speciesUrl)
+    //let pokeInfo = ref([]);
+    let pokeInfo = reactive(getPokemonDetails(pokemonUrl));
+    let speciesInfo = reactive(
+      computed(() => getPokemonSpeciesDetails(pokeInfo.value.speciesUrl))
     );
-    evolutionInfo.value = computed(async () =>
-      getPokemonEvolutionChain(speciesInfo.value.value.evoChainUrl)
+    let evolutionInfo = reactive(
+      computed(() => getPokemonEvolutionChain(speciesInfo.value.evoChainUrl))
     );
-
-    onBeforeMount(() => {});
-    onMounted(() => {});
+    console.log(speciesInfo);
+    console.log(evolutionInfo);
 
     return { pokeInfo, speciesInfo, evolutionInfo };
   }

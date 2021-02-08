@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-export function getPokemonDetails(pokemonUrl) {
+export function getPokemonDetails(url) {
   var pokeInfo = ref({
     nationalDex: Number,
     ability: [],
@@ -21,11 +21,20 @@ export function getPokemonDetails(pokemonUrl) {
     speciesUrl: String
   });
 
-  fetch(pokemonUrl)
+  fetch(url)
     .then(res => res.json())
     .then(data => {
       //Reduce typing for .value of ref for each item, maybe be a better way to do this but quick solution for now
       let pD = pokeInfo.value;
+      // Get Height and weight
+      pD.height = data.height;
+      pD.weight = data.weight;
+      //Get National Dex
+      pD.nationalDex = data.id;
+      //Get Base Exp
+      pD.baseExp = data.base_experience;
+      //Function calls
+      pD.speciesUrl = data.species.url;
       //Get Abilities
       if (data.abilities.length > 0) {
         for (let i = 0; i < data.abilities.length; i++) {
@@ -70,18 +79,7 @@ export function getPokemonDetails(pokemonUrl) {
           }
         }
       }
-      // Get Height and weight
-      pD.height = data.height;
-      pD.weight = data.weight;
-
-      //Get National Dex
-      pD.nationalDex = data.id.toFixed();
-
-      //Get Base Exp
-      pD.baseExp = data.base_experience;
-
-      //Function calls
-      pD.speciesUrl = data.species.url;
     });
-  return pokeInfo.value;
+
+  return pokeInfo;
 }

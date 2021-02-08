@@ -1,7 +1,7 @@
 import { ref } from "vue";
 
 export function getPokemonSpeciesDetails(url) {
-  var speciesData = ref({
+  var speciesInfo = ref({
     baseHappiness: Number,
     captureRate: Number,
     eggGroups: [],
@@ -18,7 +18,7 @@ export function getPokemonSpeciesDetails(url) {
     .then(res => res.json())
     .then(data => {
       //Quickly .value for the ref
-      let sD = speciesData.value;
+      let sD = speciesInfo.value;
       //GET/SET DATA
       //Non-Array's first
       sD.baseHappiness = data.base_happiness;
@@ -43,5 +43,5 @@ export function getPokemonSpeciesDetails(url) {
         }
       }
     });
-  return speciesData.value;
+  return speciesInfo.value;
 }
