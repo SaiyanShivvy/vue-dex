@@ -4,7 +4,6 @@
    bg-white rounded-lg shadow-lg hover:shadow-2xl"
   >
     <div class="justify-center">
-      <!-- Spires from PokemonDB-->
       <img
         :src="
           'https://pokeres.bastionbot.org/images/pokemon/' +
