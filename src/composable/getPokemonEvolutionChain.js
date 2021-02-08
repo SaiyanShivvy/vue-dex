@@ -4,26 +4,27 @@ export function getPokemonEvolutionChain(url) {
   var evolutionInfo = ref({
     evolutionNames: [],
     evolutionLevels: [],
-    evolutionTrigger: String,
-    evolutionItem: String,
-    evolutionTrade: Boolean
+    evolutionTrigger: [],
+    evolutionItem: [],
+    evolutionTrade: []
   });
 
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      //quick hand
       let eI = evolutionInfo.value;
       let evoData = data.chain;
-      //get next evolutions
       do {
-        var evoDetails = evoData["evolution_details"][0];
+        //let numberOfEvolutions = evoData.evolves_to.length;
+        let evoDetails = evoData["evolution_details"][0];
         eI.evolutionNames.push(evoData.species.name);
         eI.evolutionLevels.push(!evoDetails ? 1 : evoDetails.min_level);
-        eI.evolutionTrigger = !evoDetails ? null : evoDetails.trigger.name;
-        eI.evolutionItem = !evoDetails ? null : evoDetails.item;
-        eI.evolutionTrade = !evoDetails ? null : evoDetails.trade_species;
-      } while (!!evoData && evoData.hasOwnProperty.call("evolves_to"));
+        eI.evolutionTrigger.push(!evoDetails ? null : evoDetails.trigger.name);
+        eI.evolutionItem.push(!evoDetails ? null : evoDetails.item);
+        eI.evolutionTrade.push(!evoDetails ? null : evoDetails.trade_species);
+        evoData = evoData.evolves_to[0];
+        console.log(evolutionInfo);
+      } while (evoData != undefined && evoData.evolves_to != null);
     });
   return evolutionInfo.value;
 }

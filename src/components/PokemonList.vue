@@ -28,7 +28,7 @@ export default {
     });
 
     //fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=20")
+    fetch("https://pokeapi.co/api/v2/pokemon/?limit=151")
       .then(res => res.json())
       .then(data => {
         state.pokemonList = data.results;

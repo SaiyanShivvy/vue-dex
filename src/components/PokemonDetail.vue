@@ -48,9 +48,9 @@
           <div v-else>
             <p>Fetching Remaining Information...</p>
           </div>
-          <!-- <div v-if="evolutionInfo != null">
-            <p>{{ evolutionInfo.value.evolutionNames }}</p>
-          </div> -->
+          <div v-if="evolutionInfo != null">
+            <p>{{ evolutionInfo.evolutionNames }}</p>
+          </div>
           <hr />
           <div class="ml-auto">
             <button
@@ -94,8 +94,6 @@ export default {
     let evolutionInfo = reactive(
       computed(() => getPokemonEvolutionChain(speciesInfo.value.evoChainUrl))
     );
-    console.log(speciesInfo);
-    console.log(evolutionInfo);
 
     return { pokeInfo, speciesInfo, evolutionInfo };
   }

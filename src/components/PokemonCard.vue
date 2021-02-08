@@ -12,7 +12,7 @@
             '.png'
         "
         alt="pokeInfo.pokeData.name"
-        class="w-full"
+        class=""
       />
     </div>
     <div class="p-4">
