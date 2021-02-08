@@ -62,9 +62,9 @@
 
 <script>
 import { ref, onBeforeMount, onMounted, computed } from "vue";
-import { getPokemonDetails } from "@/functions/getPokemonDetails";
-import { getPokemonSpeciesDetails } from "@/functions/getPokemonSpecies";
-import { getPokemonEvolutionChain } from "@/functions/getPokemonEvolutionChain";
+import { getPokemonDetails } from "@/composable/getPokemonDetails";
+import { getPokemonSpeciesDetails } from "@/composable/getPokemonSpecies";
+import { getPokemonEvolutionChain } from "@/composable/getPokemonEvolutionChain";
 
 export default {
   name: "Pokemon Card",
@@ -84,15 +84,14 @@ export default {
     let speciesInfo = ref();
     let evolutionInfo = ref();
     pokeInfo.value = getPokemonDetails(pokemonUrl);
+    speciesInfo.value = computed(async () =>
+      getPokemonSpeciesDetails(pokeInfo.value.speciesUrl)
+    );
+    evolutionInfo.value = computed(async () =>
+      getPokemonEvolutionChain(speciesInfo.value.value.evoChainUrl)
+    );
 
-    onBeforeMount(() => {
-      speciesInfo.value = computed(() =>
-        getPokemonSpeciesDetails(pokeInfo.value.speciesUrl)
-      );
-      evolutionInfo.value = computed(() =>
-        getPokemonEvolutionChain(speciesInfo.value.value.evoChainUrl)
-      );
-    });
+    onBeforeMount(() => {});
     onMounted(() => {});
 
     return { pokeInfo, speciesInfo, evolutionInfo };

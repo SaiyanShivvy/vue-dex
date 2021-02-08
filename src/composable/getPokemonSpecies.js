@@ -5,7 +5,7 @@ export function getPokemonSpeciesDetails(url) {
     baseHappiness: Number,
     captureRate: Number,
     eggGroups: [],
-    flavorText: [], //Unsure if I use 1 or all of the entries
+    flavorText: [],
     growthRate: String,
     hatchCounter: Number,
     isBaby: Boolean,
