@@ -26,5 +26,5 @@ export function getPokemonEvolutionChain(url) {
         console.log(evolutionInfo);
       } while (evoData != undefined && evoData.evolves_to != null);
     });
-  return evolutionInfo.value;
+  return evolutionInfo;
 }

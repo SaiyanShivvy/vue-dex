@@ -1,37 +1,41 @@
 <template>
   <div
-    class="max-w-md grid-cols-3 gap-4 my-4 mx-4
-   bg-white rounded-lg shadow-lg hover:shadow-2xl"
+    class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 px-2"
   >
-    <div class="justify-center">
-      <img
-        :src="
-          'https://pokeres.bastionbot.org/images/pokemon/' +
-            pokeInfo.pokeData.id +
-            '.png'
-        "
-        alt="pokeInfo.pokeData.name"
-        class=""
-      />
-    </div>
-    <div class="p-4">
-      <h5
-        class="text-sm text-gray-500 font-bold tracking-widest mb-2 uppercase"
-      >
-        ID: {{ pokeInfo.pokeData.id }}
-      </h5>
-      <h5
+    <div class="px-4">
+      <h1
         class="text-sm text-gray-500 font-bold tracking-widest mb-2 uppercase"
       >
         {{ pokeInfo.pokeData.name }}
-      </h5>
-      <button @click="toggleModal">Details</button>
-      <PokemonDetail
-        v-if="modalOpen"
-        @close="modalOpen = false"
-        :pokemon="pokeInfo.pokeData.id"
-      ></PokemonDetail>
+      </h1>
     </div>
+    <img
+      class="h-56 w-full object-cover mt-2"
+      :src="
+        'https://pokeres.bastionbot.org/images/pokemon/' +
+          pokeInfo.pokeData.id +
+          '.png'
+      "
+      alt=""
+    />
+    <div class="flex items-center justify-between px-4 py-2">
+      <h1
+        class="text-sm text-gray-500 font-bold tracking-widest mb-2 uppercase"
+      >
+        ID: {{ pokeInfo.pokeData.id }}
+      </h1>
+      <button
+        class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded"
+        @click="toggleModal"
+      >
+        Details
+      </button>
+    </div>
+    <PokemonDetail
+      v-if="modalOpen"
+      @close="modalOpen = false"
+      :pokemon="pokeInfo.pokeData.id"
+    ></PokemonDetail>
   </div>
 </template>
 

@@ -43,5 +43,5 @@ export function getPokemonSpeciesDetails(url) {
         }
       }
     });
-  return speciesInfo.value;
+  return speciesInfo;
 }

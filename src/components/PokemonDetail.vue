@@ -6,59 +6,25 @@
     >
       <div class="bg-white rounded-lg w-1/2">
         <div class="flex flex-col items-start p-4">
-          <div class="flex items-center w-full">
-            <div class="text-gray-900 font-medium text-lg">Pokemon Details</div>
-          </div>
-          <hr />
-          <div class="">
+          <div>
+            <img
+              :src="
+                'https://pokeres.bastionbot.org/images/pokemon/' +
+                  pokeInfo.nationalDex +
+                  '.png'
+              "
+              class=""
+            />
             <p>National Dex: {{ pokeInfo.nationalDex }}</p>
-            <p>
-              Abiilities:
-              {{ pokeInfo.ability[0] }}
-              Hidden: {{ pokeInfo.hiddenAbility[0] }}
-            </p>
 
-            <p>Types: {{ pokeInfo.types }}</p>
-            <p>Weight: {{ pokeInfo.weight }} Height: {{ pokeInfo.height }}</p>
-            <p>
-              Stats: HP: {{ pokeInfo.hp }} Attack:
-              {{ pokeInfo.attack }}
-              Defense: {{ pokeInfo.defense }} Special Attack:
-              {{ pokeInfo.specialAttack }}
-              Special Defense: {{ pokeInfo.specialDefense }} Speed:
-              {{ pokeInfo.speed }}
-            </p>
-            <p>
-              Effort Value: {{ pokeInfo.effortValue }} {{ pokeInfo.effortStat }}
-            </p>
-            <p>Base Exp. {{ pokeInfo.baseExp }}</p>
-            <slot name="content">
-              <div class="types">
-                <ul>
-                  <li v-for="move in pokeInfo.moves" :key="move.slot">
-                    {{ move }}
-                  </li>
-                </ul>
-              </div>
-            </slot>
-          </div>
-          <div v-if="speciesInfo != null">
-            <p>{{ speciesInfo.eggGroups }}</p>
-          </div>
-          <div v-else>
-            <p>Fetching Remaining Information...</p>
-          </div>
-          <div v-if="evolutionInfo != null">
-            <p>{{ evolutionInfo.evolutionNames }}</p>
-          </div>
-          <hr />
-          <div class="ml-auto">
-            <button
-              class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-              @click.prevent="close"
-            >
-              Close
-            </button>
+            <div class="ml-auto">
+              <button
+                class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                @click.prevent="close"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -86,7 +52,6 @@ export default {
   },
   setup(props) {
     const pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + props.pokemon;
-    //let pokeInfo = ref([]);
     let pokeInfo = reactive(getPokemonDetails(pokemonUrl));
     let speciesInfo = reactive(
       computed(() => getPokemonSpeciesDetails(pokeInfo.value.speciesUrl))
@@ -94,7 +59,6 @@ export default {
     let evolutionInfo = reactive(
       computed(() => getPokemonEvolutionChain(speciesInfo.value.evoChainUrl))
     );
-
     return { pokeInfo, speciesInfo, evolutionInfo };
   }
 };
